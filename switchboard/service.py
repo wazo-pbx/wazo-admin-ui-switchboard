@@ -19,8 +19,8 @@ class SwitchboardService(object):
     def list(self):
         return self._confd.switchboards.list()
 
-    def get(self, switchboard_id):
-        return {'switchboard': self._confd.switchboards.get(switchboard_id)}
+    def get(self, switchboard_uuid):
+        return {'switchboard': self._confd.switchboards.get(switchboard_uuid)}
 
     def update(self, resources):
         switchboard = resources.get('switchboard')
@@ -30,6 +30,6 @@ class SwitchboardService(object):
         switchboard = resources.get('switchboard')
         switchboard = self._confd.switchboards.create(switchboard)
 
-    def delete(self, switchboard_id):
-        switchboard = self._confd.switchboards.get(switchboard_id)
-        self._confd.switchboards.delete(switchboard_id)
+    def delete(self, switchboard_uuid):
+        switchboard = self._confd.switchboards.get(switchboard_uuid)
+        self._confd.switchboards.delete(switchboard_uuid)
