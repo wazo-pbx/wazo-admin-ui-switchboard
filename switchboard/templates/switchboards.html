@@ -46,10 +46,10 @@
                   {% endif %}
                 </td>
                 <td>
-                  <a href="{{ url_for('.SwitchboardView:get', id=switchboard.id) }}" class="btn btn-xs btn-info">
+                  <a href="{{ url_for('.SwitchboardView:get', id=switchboard.uuid) }}" class="btn btn-xs btn-info">
                     <i class="fa fa-eye"></i>
                   </a>
-                  <a href="{{ url_for('.SwitchboardView:delete', id=switchboard.id) }}" class="btn btn-xs btn-danger" onclick="return confirm('Are you sure you want to delete this item?');">
+                  <a href="{{ url_for('.SwitchboardView:delete', id=switchboard.uuid) }}" class="btn btn-xs btn-danger" onclick="return confirm('Are you sure you want to delete this item?');">
                     <i class="fa fa-minus"></i>
                   </a>
                 </td>
