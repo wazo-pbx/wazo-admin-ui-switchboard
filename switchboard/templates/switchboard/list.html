@@ -76,6 +76,7 @@
         <div class="box-body">
           {{ form.csrf_token() }}
 	  {{ render_field(form.name) }}
+	  {{ render_field(form.users) }}
 	</div>
         <div class="box-footer">
 	  {{ render_field(form.submit, class_="btn btn-primary pull-right", value="Add", with_label=False) }}

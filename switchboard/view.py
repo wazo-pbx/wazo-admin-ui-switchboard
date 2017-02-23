@@ -34,8 +34,8 @@ class SwitchboardView(BaseView):
     form = SwitchboardForm
     resource = 'switchboard'
     schema = SwitchboardFormSchema
-    templates = {'list': 'switchboards.html',
-                 'edit': 'view_switchboard.html'}
+    templates = {'list': 'switchboard/list.html',
+                 'edit': 'switchboard/view.html'}
 
     @classy_menu_item('.switchboards', 'Switchboards', order=3, icon="desktop")
     def index(self):
