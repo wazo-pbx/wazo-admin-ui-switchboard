@@ -5,7 +5,7 @@
 from __future__ import unicode_literals
 
 from flask_menu.classy import classy_menu_item
-from marshmallow import fields, post_load
+from marshmallow import fields, post_load, pre_dump
 
 from wazo_admin_ui.helpers.classful import BaseView
 from wazo_admin_ui.helpers.mallow import BaseSchema
@@ -27,6 +27,10 @@ class SwitchboardFormSchema(BaseSchema):
     @post_load(pass_original=True)
     def create_form(self, data, raw_data):
         return SwitchboardForm(data=data['switchboard'])
+
+    @pre_dump
+    def add_envelope(self, data):
+        return {'switchboard': data}
 
 
 class SwitchboardView(BaseView):
