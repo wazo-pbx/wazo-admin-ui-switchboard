@@ -19,18 +19,26 @@ class SwitchboardSchema(BaseSchema):
         fields = ('name',)
 
 
+class UserSchema(BaseSchema):
+    firstname = fields.String(attribute='firstname')
+    lastname = fields.String(attribute='lastname')
+
+
 class SwitchboardFormSchema(BaseSchema):
     _main_resource = 'switchboard'
 
     switchboard = fields.Nested(SwitchboardSchema)
+    users = fields.Nested(UserSchema)
 
     @post_load(pass_original=True)
     def create_form(self, data, raw_data):
-        return SwitchboardForm(data=data['switchboard'])
+        users = []
+        return SwitchboardForm(data=data['switchboard'], users=users)
 
     @pre_dump
     def add_envelope(self, data):
-        return {'switchboard': data}
+        return {'switchboard': data,
+                'users': data}
 
 
 class SwitchboardView(BaseView):
@@ -43,4 +51,6 @@ class SwitchboardView(BaseView):
 
     @classy_menu_item('.switchboards', 'Switchboards', order=3, icon="desktop")
     def index(self):
-        return super(SwitchboardView, self).index()
+        form = SwitchboardForm()
+        form.users.choices = self.service.get_users()
+        return super(SwitchboardView, self)._index(form=form)
