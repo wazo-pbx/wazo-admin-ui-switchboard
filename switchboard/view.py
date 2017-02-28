@@ -16,7 +16,8 @@ from .form import SwitchboardForm
 class SwitchboardSchema(BaseSchema):
 
     class Meta:
-        fields = ('name',)
+        fields = ('name',
+                  'users')
 
 
 class AggregatorSchema(BaseAggregatorSchema):

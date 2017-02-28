@@ -10,5 +10,20 @@ class SwitchboardService(BaseConfdService):
     resource = 'switchboard'
     confd_resource = 'switchboards'
 
+    def create(self, resources):
+        resource = resources.get(self.resource)
+        sw = self._confd.switchboards.create(resource)
+
+        if resource.get('users') and sw:
+            self.add_members_to_switchboard(sw['uuid'], resource['users'])
+
     def get_users(self):
         return self._confd.users.list()
+
+    def add_members_to_switchboard(self, switchboard_uuid, members):
+        switchboard_members = []
+
+        for member in members:
+            switchboard_members.append({'uuid': member})
+
+        return self._confd.switchboards.relations(switchboard_uuid).update_user_members(switchboard_members)
