@@ -5,10 +5,10 @@
 from __future__ import unicode_literals
 
 from flask_menu.classy import classy_menu_item
-from marshmallow import fields, post_load, pre_dump
+from marshmallow import fields
 
 from wazo_admin_ui.helpers.classful import BaseView
-from wazo_admin_ui.helpers.mallow import BaseSchema
+from wazo_admin_ui.helpers.mallow import BaseSchema, BaseAggregatorSchema
 
 from .form import SwitchboardForm
 
@@ -19,27 +19,17 @@ class SwitchboardSchema(BaseSchema):
         fields = ('name',)
 
 
-class SwitchboardFormSchema(BaseSchema):
+class AggregatorSchema(BaseAggregatorSchema):
     _main_resource = 'switchboard'
 
     switchboard = fields.Nested(SwitchboardSchema)
-
-    @post_load
-    def create_form(self, data):
-        return SwitchboardForm(data=data['switchboard'])
-
-    @pre_dump
-    def add_envelope(self, data):
-        return {'switchboard': data}
 
 
 class SwitchboardView(BaseView):
 
     form = SwitchboardForm
     resource = 'switchboard'
-    schema = SwitchboardFormSchema
-    templates = {'list': 'switchboard/list.html',
-                 'edit': 'switchboard/view.html'}
+    schema = AggregatorSchema
 
     @classy_menu_item('.switchboards', 'Switchboards', order=3, icon="desktop")
     def index(self):

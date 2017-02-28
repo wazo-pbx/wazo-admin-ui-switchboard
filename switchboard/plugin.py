@@ -2,15 +2,14 @@
 # Copyright 2017 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
-from flask import Blueprint
 from flask_menu.classy import register_flaskview
 
+from wazo_admin_ui.helpers.plugin import create_blueprint
 
 from .service import SwitchboardService
 from .view import SwitchboardView
 
-switchboard = Blueprint('switchboard', __name__, template_folder='templates',
-                       static_folder='static', static_url_path='/%s' % __name__)
+switchboard = create_blueprint('switchboard', __name__)
 
 
 class Plugin(object):
