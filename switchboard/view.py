@@ -19,26 +19,18 @@ class SwitchboardSchema(BaseSchema):
         fields = ('name',)
 
 
-class UserSchema(BaseSchema):
-    firstname = fields.String(attribute='firstname')
-    lastname = fields.String(attribute='lastname')
-
-
 class SwitchboardFormSchema(BaseSchema):
     _main_resource = 'switchboard'
 
     switchboard = fields.Nested(SwitchboardSchema)
-    users = fields.Nested(UserSchema)
 
-    @post_load(pass_original=True)
-    def create_form(self, data, raw_data):
-        users = []
-        return SwitchboardForm(data=data['switchboard'], users=users)
+    @post_load
+    def create_form(self, data):
+        return SwitchboardForm(data=data['switchboard'])
 
     @pre_dump
     def add_envelope(self, data):
-        return {'switchboard': data,
-                'users': data}
+        return {'switchboard': data}
 
 
 class SwitchboardView(BaseView):
@@ -51,6 +43,11 @@ class SwitchboardView(BaseView):
 
     @classy_menu_item('.switchboards', 'Switchboards', order=3, icon="desktop")
     def index(self):
-        form = SwitchboardForm()
-        form.users.choices = self.service.get_users()
-        return super(SwitchboardView, self)._index(form=form)
+        return super(SwitchboardView, self).index()
+
+    def _populate_form(self, form):
+        users = self.service.get_users()
+        user_list = [(user['uuid'], u"{} {}".format(user['firstname'], user['lastname']))
+                     for user in users['items']]
+        form.users.choices = user_list
+        return form
