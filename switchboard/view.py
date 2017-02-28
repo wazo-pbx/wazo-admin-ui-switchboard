@@ -42,3 +42,7 @@ class SwitchboardView(BaseView):
                      for user in users['items']]
         form.users.choices = user_list
         return form
+
+    def _map_resources_to_form(self, resources):
+        users = [user['uuid'] for user in resources['switchboard']['members']['users']]
+        return self.form(data=resources['switchboard'], users=users)
