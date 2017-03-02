@@ -7,8 +7,8 @@ from wazo_admin_ui.helpers.service import BaseConfdService
 
 class SwitchboardService(BaseConfdService):
 
-    resource = 'switchboard'
-    confd_resource = 'switchboards'
+    resource_name = 'switchboard'
+    resource_confd = 'switchboards'
 
     def create(self, resources):
         switchboard = resources.get('switchboard')
