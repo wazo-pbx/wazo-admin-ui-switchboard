@@ -48,13 +48,6 @@ class SwitchboardView(BaseView):
     def index(self):
         return super(SwitchboardView, self).index()
 
-    def _populate_form(self, form):
-        users = self.service.get_users()
-        user_list = [(user['uuid'], u"{} {}".format(user['firstname'], user['lastname']))
-                     for user in users['items']]
-        form.users.choices = user_list
-        return form
-
     def _map_resources_to_form(self, resources):
         data = self.schema().load(resources).data
         users = [user['uuid'] for user in resources['switchboard']['members']['users']]
