@@ -29,6 +29,6 @@ class Plugin(object):
         SwitchboardDestinationView.register(switchboard, route_base='/switchboard_destination')
 
         register_destination_form('switchboard', 'Switchboard', SwitchboardDestinationForm)
-        register_listing_url('switchoard', 'switchboard.SwitchboardDestinationView:list_json')
+        register_listing_url('switchboard', 'switchboard.SwitchboardDestinationView:list_json')
 
         core.register_blueprint(switchboard)

@@ -57,17 +57,7 @@ class SwitchboardView(BaseView):
 class SwitchboardDestinationView(BaseDestinationView):
 
     def list_json(self):
-        return self._list_json('id')
-
-    def uuid_list_json(self):
-        return self._list_json('uuid')
-
-    def _list_json(self, field_id):
         params = self._extract_params()
         switchboards = self.service.list(**params)
-        results = []
-        for switchboard in switchboards['items']:
-            text = '{}'.format(switchboard['name'])
-            results.append({'id': switchboard[field_id], 'text': text})
-
+        results = [{'id': sw['uuid'], 'text': sw['name']} for sw in switchboards['items']]
         return self._select2_response(results, switchboards['total'], params)
