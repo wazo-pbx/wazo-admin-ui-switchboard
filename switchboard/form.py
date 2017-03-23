@@ -5,7 +5,7 @@
 from flask_wtf import FlaskForm
 
 from wtforms.fields import (SubmitField,
-                            TextField,
+                            StringField,
                             SelectField,
                             SelectMultipleField)
 from wtforms.validators import InputRequired
@@ -14,9 +14,10 @@ from wazo_admin_ui.helpers.destination import DestinationHiddenField
 
 
 class SwitchboardForm(FlaskForm):
-    name = TextField('Name', [InputRequired()])
+    name = StringField('Name', [InputRequired()])
     users = SelectMultipleField('Users', choices=[])
     submit = SubmitField('Submit')
+
 
 class SwitchboardDestinationForm(FlaskForm):
     setted_value_template = '{switchboard_name}'
