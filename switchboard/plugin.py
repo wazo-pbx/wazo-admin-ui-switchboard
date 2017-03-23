@@ -5,9 +5,12 @@
 from flask_menu.classy import register_flaskview
 
 from wazo_admin_ui.helpers.plugin import create_blueprint
+from wazo_admin_ui.helpers.destination import register_destination_form, register_listing_url
 
 from .service import SwitchboardService
-from .view import SwitchboardView
+from .view import SwitchboardView, SwitchboardDestinationView
+from .form import SwitchboardDestinationForm
+
 
 switchboard = create_blueprint('switchboard', __name__)
 
@@ -21,5 +24,11 @@ class Plugin(object):
         SwitchboardView.service = SwitchboardService(config['confd'])
         SwitchboardView.register(switchboard, route_base='/switchboards')
         register_flaskview(switchboard, SwitchboardView)
+
+        SwitchboardDestinationView.service = SwitchboardService(config['confd'])
+        SwitchboardDestinationView.register(switchboard, route_base='/switchboard_destination')
+
+        register_destination_form('switchboard', 'Switchboard', SwitchboardDestinationForm)
+        register_listing_url('switchoard', 'switchboard.SwitchboardDestinationView:list_json')
 
         core.register_blueprint(switchboard)

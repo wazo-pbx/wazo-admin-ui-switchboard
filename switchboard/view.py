@@ -7,8 +7,8 @@ from __future__ import unicode_literals
 from flask_menu.classy import classy_menu_item
 from marshmallow import fields, pre_dump
 
-from wazo_admin_ui.helpers.classful import BaseView
-from wazo_admin_ui.helpers.mallow import BaseSchema, BaseAggregatorSchema
+from wazo_admin_ui.helpers.classful import BaseView, BaseDestinationView
+from wazo_admin_ui.helpers.mallow import BaseSchema, BaseAggregatorSchema, extract_form_fields
 
 from .form import SwitchboardForm
 
@@ -16,7 +16,7 @@ from .form import SwitchboardForm
 class UserSchema(BaseSchema):
 
     class Meta:
-        fields = ('uuid',)
+        fields = extract_form_fields(SwitchboardForm)
 
 
 class SwitchboardSchema(BaseSchema):
@@ -52,3 +52,22 @@ class SwitchboardView(BaseView):
         data = self.schema().load(resources).data
         users = [user['uuid'] for user in resources['switchboard']['members']['users']]
         return self.form(data=data['switchboard'], users=users)
+
+
+class SwitchboardDestinationView(BaseDestinationView):
+
+    def list_json(self):
+        return self._list_json('id')
+
+    def uuid_list_json(self):
+        return self._list_json('uuid')
+
+    def _list_json(self, field_id):
+        params = self._extract_params()
+        switchboards = self.service.list(**params)
+        results = []
+        for switchboard in switchboards['items']:
+            text = '{}'.format(switchboard['name'])
+            results.append({'id': switchboard[field_id], 'text': text})
+
+        return self._select2_response(results, switchboards['total'], params)
