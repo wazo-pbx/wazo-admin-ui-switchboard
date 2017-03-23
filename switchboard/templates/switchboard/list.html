@@ -40,17 +40,9 @@
       {% call build_form() %}
         {% call add_default_fields(form=form, submit_value="Add") %}
 	      {{ render_field(form.name) }}
-	      {{ render_field(form.users) }}
+	      {{ render_field(form.users, data_listing_href=url_for(listing_urls['uuid_user'])) }}
         {% endcall %}
       {% endcall %}
     {% endcall %}
   </section>
-{% endblock %}
-
-{% block additional_js %}
-  <script>
-    $(document).ready(function() {
-      create_default_select2('{{ url_for(listing_urls['uuid_user']) }}');
-    });
-  </script>
 {% endblock %}
