@@ -13,29 +13,16 @@ from wazo_admin_ui.helpers.mallow import BaseSchema, BaseAggregatorSchema, extra
 from .form import SwitchboardForm
 
 
-class UserSchema(BaseSchema):
-
-    class Meta:
-        fields = extract_form_fields(SwitchboardForm)
-
-
 class SwitchboardSchema(BaseSchema):
 
     class Meta:
-        fields = ('name',)
+        fields = extract_form_fields(SwitchboardForm)
 
 
 class AggregatorSchema(BaseAggregatorSchema):
     _main_resource = 'switchboard'
 
     switchboard = fields.Nested(SwitchboardSchema)
-    users = fields.Nested(UserSchema, many=True)
-
-    @pre_dump
-    def add_envelope(self, form):
-        users = [{'uuid': uuid} for uuid in form.users.data]
-        return {'switchboard': form,
-                'users': users}
 
 
 class SwitchboardView(BaseView):
@@ -51,7 +38,19 @@ class SwitchboardView(BaseView):
     def _map_resources_to_form(self, resources):
         data = self.schema().load(resources).data
         users = [user['uuid'] for user in resources['switchboard']['members']['users']]
-        return self.form(data=data['switchboard'], users=users)
+        form = self.form(data=data['switchboard'], users=users)
+        form.users.choices = self._build_setted_choices(resources['switchboard']['members']['users'])
+        return form
+
+    def _build_setted_choices(self, users):
+        results = []
+        for user in users:
+            if user.get('lastname'):
+                text = '{} {}'.format(user.get('firstname'), user['lastname'])
+            else:
+                text = user.get('firstname')
+            results.append((user['uuid'], text))
+        return results
 
 
 class SwitchboardDestinationView(BaseDestinationView):

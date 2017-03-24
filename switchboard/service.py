@@ -11,25 +11,25 @@ class SwitchboardService(BaseConfdService):
     resource_confd = 'switchboards'
 
     def create(self, resources):
-        switchboard = resources.get('switchboard')
-        switchboard = self._confd.switchboards.create(switchboard)
-
-        users = resources.get('users')
-
-        if users:
-            self.add_members_to_switchboard(switchboard['uuid'], users)
+        resource = super(SwitchboardService, self).create(resources)
+        self._update_members(resources, resource)
 
     def update(self, resources):
-        switchboard = resources.get('switchboard')
-        users = resources.get('users')
+        super(SwitchboardService, self).update(resources)
+        self._update_members(resources)
+
+    def _update_members(self, resources, resource=None):
+        switchboard = resources.get(self.resource_name)
+        users = switchboard.get('users')
+
+        if resource == None:
+            resource = switchboard['uuid']
 
         if users:
-            self.add_members_to_switchboard(switchboard['uuid'], users)
+            self._update_members_to_switchboard(resource, self._generate_users(users))
 
-        self._confd.switchboards.update(switchboard)
+    def _update_members_to_switchboard(self, switchboard, users):
+        return self._confd.switchboards(switchboard).update_user_members(users)
 
-    def get_users(self):
-        return self._confd.users.list()
-
-    def add_members_to_switchboard(self, switchboard_uuid, users):
-        return self._confd.switchboards(switchboard_uuid).update_user_members(users)
+    def _generate_users(self, users):
+        return [{'uuid': user} for user in users]
