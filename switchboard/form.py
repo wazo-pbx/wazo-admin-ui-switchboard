@@ -22,5 +22,5 @@ class SwitchboardForm(FlaskForm):
 class SwitchboardDestinationForm(FlaskForm):
     setted_value_template = '{switchboard_name}'
 
-    switchboard_id = SelectField('Switchboard', choices=[])
+    switchboard_uuid = SelectField('Switchboard', choices=[])
     switchboard_name = DestinationHiddenField()
