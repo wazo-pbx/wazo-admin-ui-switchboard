@@ -20,7 +20,7 @@ class SwitchboardForm(FlaskForm):
 
 
 class SwitchboardDestinationForm(FlaskForm):
-    setted_value_template = '{switchboard_name}'
+    setted_value_template = u'{switchboard_name}'
 
     switchboard_uuid = SelectField('Switchboard', choices=[])
     switchboard_name = DestinationHiddenField()
