@@ -19,13 +19,12 @@ class Plugin(object):
 
     def load(self, dependencies):
         core = dependencies['flask']
-        config = dependencies['config']
 
-        SwitchboardView.service = SwitchboardService(config['confd'])
+        SwitchboardView.service = SwitchboardService()
         SwitchboardView.register(switchboard, route_base='/switchboards')
         register_flaskview(switchboard, SwitchboardView)
 
-        SwitchboardDestinationView.service = SwitchboardService(config['confd'])
+        SwitchboardDestinationView.service = SwitchboardService()
         SwitchboardDestinationView.register(switchboard, route_base='/switchboard_destination')
 
         register_destination_form('switchboard', 'Switchboard', SwitchboardDestinationForm)

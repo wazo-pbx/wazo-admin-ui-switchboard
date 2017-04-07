@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: GPL-3.0+
 
 from wazo_admin_ui.helpers.service import BaseConfdService
+from wazo_admin_ui.helpers.confd import confd
 
 
 class SwitchboardService(BaseConfdService):
@@ -29,7 +30,7 @@ class SwitchboardService(BaseConfdService):
             self._update_members_to_switchboard(resource, self._generate_users(users))
 
     def _update_members_to_switchboard(self, switchboard, users):
-        return self._confd.switchboards(switchboard).update_user_members(users)
+        return confd.switchboards(switchboard).update_user_members(users)
 
     def _generate_users(self, users):
         return [{'uuid': user} for user in users]
