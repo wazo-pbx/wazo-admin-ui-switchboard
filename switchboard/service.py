@@ -23,7 +23,7 @@ class SwitchboardService(BaseConfdService):
         switchboard = resources.get(self.resource_name)
         users = switchboard.get('users')
 
-        if resource == None:
+        if resource is None:
             resource = switchboard['uuid']
 
         if users:
