@@ -2,8 +2,6 @@
 # Copyright 2017 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
-from flask_wtf import FlaskForm
-
 from wtforms.fields import (SubmitField,
                             StringField,
                             SelectField,
@@ -11,15 +9,16 @@ from wtforms.fields import (SubmitField,
 from wtforms.validators import InputRequired
 
 from wazo_admin_ui.helpers.destination import DestinationHiddenField
+from wazo_admin_ui.helpers.form import BaseForm
 
 
-class SwitchboardForm(FlaskForm):
+class SwitchboardForm(BaseForm):
     name = StringField('Name', [InputRequired()])
     users = SelectMultipleField('Users', choices=[])
     submit = SubmitField('Submit')
 
 
-class SwitchboardDestinationForm(FlaskForm):
+class SwitchboardDestinationForm(BaseForm):
     setted_value_template = u'{switchboard_name}'
 
     switchboard_uuid = SelectField('Switchboard', choices=[])

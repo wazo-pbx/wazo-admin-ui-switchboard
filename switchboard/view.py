@@ -6,41 +6,25 @@ from __future__ import unicode_literals
 
 from flask import jsonify, request
 from flask_menu.classy import classy_menu_item
-from marshmallow import fields
 
 from wazo_admin_ui.helpers.classful import BaseView, LoginRequiredView
 from wazo_admin_ui.helpers.classful import extract_select2_params, build_select2_response
-from wazo_admin_ui.helpers.mallow import BaseSchema, BaseAggregatorSchema, extract_form_fields
 
 from .form import SwitchboardForm
-
-
-class SwitchboardSchema(BaseSchema):
-
-    class Meta:
-        fields = extract_form_fields(SwitchboardForm)
-
-
-class AggregatorSchema(BaseAggregatorSchema):
-    _main_resource = 'switchboard'
-
-    switchboard = fields.Nested(SwitchboardSchema)
 
 
 class SwitchboardView(BaseView):
 
     form = SwitchboardForm
     resource = 'switchboard'
-    schema = AggregatorSchema
 
     @classy_menu_item('.switchboards', 'Switchboards', order=3, icon="desktop")
     def index(self):
         return super(SwitchboardView, self).index()
 
     def _map_resources_to_form(self, resources):
-        data = self.schema().load(resources).data
         users = [user['uuid'] for user in resources['switchboard']['members']['users']]
-        form = self.form(data=data['switchboard'], users=users)
+        form = self.form(data=resources['switchboard'], users=users)
         form.users.choices = self._build_setted_choices(resources['switchboard']['members']['users'])
         return form
 
@@ -53,6 +37,16 @@ class SwitchboardView(BaseView):
                 text = user.get('firstname')
             results.append((user['uuid'], text))
         return results
+
+    def _map_form_to_resources(self, form, form_id=None):
+        resources = {'switchboard': form.to_dict()}
+        if form_id:
+            resources['switchboard']['uuid'] = form_id
+        return resources
+
+    def _map_resources_to_form_errors(self, form, resources):
+        form.populate_errors(resources.get('switchboard', {}))
+        return form
 
 
 class SwitchboardDestinationView(LoginRequiredView):
