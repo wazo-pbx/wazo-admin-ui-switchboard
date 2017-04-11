@@ -6,8 +6,8 @@
 
 {% block content %}
   {% call build_section_row() %}
-    {% call build_form_box('Switchboard', resources.switchboard.name, 'desktop') %}
-      {% call build_form(action=url_for('.SwitchboardView:put', id=resources.switchboard.uuid)) %}
+    {% call build_form_box('Switchboard', resource.name, 'desktop') %}
+      {% call build_form(action=url_for('.SwitchboardView:put', id=resource.uuid)) %}
         {% call add_default_fields(form=form, submit_value="Update") %}
 	        {{ render_field(form.name) }}
 	        {{ render_field(form.users, data_listing_href=url_for(listing_urls['uuid_user'])) }}

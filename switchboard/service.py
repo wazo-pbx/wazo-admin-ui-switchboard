@@ -11,23 +11,20 @@ class SwitchboardService(BaseConfdService):
     resource_name = 'switchboard'
     resource_confd = 'switchboards'
 
-    def create(self, resources):
-        resource = super(SwitchboardService, self).create(resources)
-        self._update_members(resources, resource)
+    def create(self, resource):
+        switchboard_created = super(SwitchboardService, self).create(resource)
+        resource['uuid'] = switchboard_created['uuid']
+        self._update_members(resource)
 
-    def update(self, resources):
-        super(SwitchboardService, self).update(resources)
-        self._update_members(resources)
+    def update(self, resource):
+        super(SwitchboardService, self).update(resource)
+        self._update_members(resource)
 
-    def _update_members(self, resources, resource=None):
-        switchboard = resources.get(self.resource_name)
+    def _update_members(self, switchboard):
         users = switchboard.get('users')
 
-        if resource is None:
-            resource = switchboard['uuid']
-
         if users:
-            self._update_members_to_switchboard(resource, self._generate_users(users))
+            self._update_members_to_switchboard(switchboard, self._generate_users(users))
 
     def _update_members_to_switchboard(self, switchboard, users):
         return confd.switchboards(switchboard).update_user_members(users)
