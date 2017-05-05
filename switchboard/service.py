@@ -16,18 +16,9 @@ class SwitchboardService(BaseConfdService):
         resource['uuid'] = switchboard_created['uuid']
         self._update_members(resource)
 
-    def update(self, resource):
-        super(SwitchboardService, self).update(resource)
-        self._update_members(resource)
+    def update(self, switchboard):
+        super(SwitchboardService, self).update(switchboard)
+        self._update_members(switchboard, switchboard['members'])
 
-    def _update_members(self, switchboard):
-        users = switchboard.get('users')
-
-        if users:
-            self._update_members_to_switchboard(switchboard, self._generate_users(users))
-
-    def _update_members_to_switchboard(self, switchboard, users):
-        return confd.switchboards(switchboard).update_user_members(users)
-
-    def _generate_users(self, users):
-        return [{'uuid': user} for user in users]
+    def _update_members(self, switchboard, members):
+        confd.switchboards(switchboard).update_user_members(members.get('users'))

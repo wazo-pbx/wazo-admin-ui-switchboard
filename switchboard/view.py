@@ -24,19 +24,28 @@ class SwitchboardView(BaseView):
 
     def _map_resources_to_form(self, resource):
         users = [user['uuid'] for user in resource['members']['users']]
-        form = self.form(data=resource, users=users)
-        form.users.choices = self._build_setted_choices(resource['members']['users'])
+        resource['members']['user_uuids'] = users
+        form = self.form(data=resource)
         return form
 
-    def _build_setted_choices(self, users):
+    def _populate_form(self, form):
+        form.members.user_uuids.choices = self._build_setted_choices_users(form.members.users)
+        return form
+
+    def _build_setted_choices_users(self, users):
         results = []
         for user in users:
-            if user.get('lastname'):
-                text = '{} {}'.format(user.get('firstname'), user['lastname'])
+            if user.lastname.data:
+                text = '{} {}'.format(user.firstname.data, user.lastname.data)
             else:
-                text = user.get('firstname')
-            results.append((user['uuid'], text))
+                text = user.firstname.data
+            results.append((user.uuid.data, text))
         return results
+
+    def _map_form_to_resources(self, form, form_id=None):
+        resource = super(SwitchboardView, self)._map_form_to_resources(form, form_id)
+        resource['members']['users'] = [{'uuid': user_uuid} for user_uuid in form.members.user_uuids.data]
+        return resource
 
     def _map_resources_to_form_errors(self, form, resources):
         form.populate_errors(resources.get('switchboard', {}))
