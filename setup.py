@@ -23,7 +23,7 @@ setup(
 
     entry_points={
         'wazo_admin_ui.plugins': [
-            'switchboard = switchboard.plugin:Plugin',
+            'switchboard = wazo_plugind_admin_ui_switchboard_official.plugin:Plugin',
         ]
     }
 )

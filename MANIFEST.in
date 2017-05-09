@@ -1,2 +1,2 @@
-recursive-include switchboard/templates *
-recursive-include switchboard/static *
+recursive-include wazo_plugind_admin_ui_switchboard_official/templates *
+recursive-include wazo_plugind_admin_ui_switchboard_official/static *
