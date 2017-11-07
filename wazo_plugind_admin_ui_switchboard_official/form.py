@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
@@ -33,7 +32,7 @@ class SwitchboardForm(BaseForm):
 
 
 class SwitchboardDestinationForm(BaseForm):
-    setted_value_template = u'{switchboard_name}'
+    setted_value_template = '{switchboard_name}'
 
     switchboard_uuid = SelectField('Switchboard', [InputRequired()], choices=[])
     switchboard_name = DestinationHiddenField()
