@@ -26,10 +26,10 @@ class SwitchboardView(BaseView):
         return form
 
     def _populate_form(self, form):
-        form.members.user_uuids.choices = self._build_setted_choices_users(form.members.users)
+        form.members.user_uuids.choices = self._build_set_choices_users(form.members.users)
         return form
 
-    def _build_setted_choices_users(self, users):
+    def _build_set_choices_users(self, users):
         results = []
         for user in users:
             if user.lastname.data:

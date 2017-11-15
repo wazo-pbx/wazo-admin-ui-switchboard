@@ -32,7 +32,7 @@ class SwitchboardForm(BaseForm):
 
 
 class SwitchboardDestinationForm(BaseForm):
-    setted_value_template = '{switchboard_name}'
+    set_value_template = '{switchboard_name}'
 
     switchboard_uuid = SelectField('Switchboard', [InputRequired()], choices=[])
     switchboard_name = DestinationHiddenField()
