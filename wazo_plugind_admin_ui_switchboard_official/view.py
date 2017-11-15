@@ -1,8 +1,5 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
-
-from __future__ import unicode_literals
 
 from flask import jsonify, request
 from flask_menu.classy import classy_menu_item
@@ -29,10 +26,10 @@ class SwitchboardView(BaseView):
         return form
 
     def _populate_form(self, form):
-        form.members.user_uuids.choices = self._build_setted_choices_users(form.members.users)
+        form.members.user_uuids.choices = self._build_set_choices_users(form.members.users)
         return form
 
-    def _build_setted_choices_users(self, users):
+    def _build_set_choices_users(self, users):
         results = []
         for user in users:
             if user.lastname.data:
