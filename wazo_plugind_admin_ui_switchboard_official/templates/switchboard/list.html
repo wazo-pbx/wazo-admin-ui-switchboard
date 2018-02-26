@@ -1,12 +1,12 @@
 {% extends "layout.html" %}
 
 {% block content_header %}
-  {{ build_breadcrumb('Switchboard', '', 'desktop', ['List']) }}
+  {{ build_breadcrumb(_('Switchboard'), '', 'desktop', [_('List')]) }}
 {% endblock %}
 
 {% block content %}
   <section class="content">
-    {% call build_list_containers('Switchboards', 'desktop') %}
+    {% call build_list_containers(_('Switchboards'), 'desktop') %}
       {% call build_list_table() %}
         {% call build_list_table_headers(get=url_for('.SwitchboardView:get', id=''), delete=url_for('.SwitchboardView:delete', id='')) %}
           <th>Name</th>
@@ -31,9 +31,9 @@
       {% endcall %}
     {% endcall %}
 
-    {% call build_hidden_add_containers('Add Switchboard') %}
+    {% call build_hidden_add_containers(_('Add Switchboard')) %}
       {% call build_form() %}
-        {% call add_default_fields(form=form, submit_value="Add") %}
+        {% call add_default_fields(form=form, submit_value=_('Add')) %}
           {{ render_field(form.name) }}
           {{ render_field(form.members.user_uuids, data_listing_href=url_for(listing_urls['uuid_user'])) }}
         {% endcall %}

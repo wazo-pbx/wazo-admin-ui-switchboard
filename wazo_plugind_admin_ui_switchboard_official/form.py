@@ -1,13 +1,16 @@
-# Copyright 2017 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2017-2018 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
-from wtforms.fields import (FieldList,
-                            FormField,
-                            HiddenField,
-                            SubmitField,
-                            StringField,
-                            SelectField,
-                            SelectMultipleField)
+from flask_babel import lazy_gettext as l_
+from wtforms.fields import (
+    FieldList,
+    FormField,
+    HiddenField,
+    SubmitField,
+    StringField,
+    SelectField,
+    SelectMultipleField
+)
 from wtforms.validators import InputRequired, Length
 
 from wazo_admin_ui.helpers.destination import DestinationHiddenField
@@ -21,18 +24,18 @@ class UserForm(BaseForm):
 
 
 class MembersForm(BaseForm):
-    user_uuids = SelectMultipleField('Members', choices=[])
+    user_uuids = SelectMultipleField(l_('Members'), choices=[])
     users = FieldList(FormField(UserForm))
 
 
 class SwitchboardForm(BaseForm):
-    name = StringField('Name', [InputRequired(), Length(max=128)])
+    name = StringField(l_('Name'), [InputRequired(), Length(max=128)])
     members = FormField(MembersForm)
-    submit = SubmitField('Submit')
+    submit = SubmitField(l_('Submit'))
 
 
 class SwitchboardDestinationForm(BaseForm):
     set_value_template = '{switchboard_name}'
 
-    switchboard_uuid = SelectField('Switchboard', [InputRequired()], choices=[])
+    switchboard_uuid = SelectField(l_('Switchboard'), [InputRequired()], choices=[])
     switchboard_name = DestinationHiddenField()

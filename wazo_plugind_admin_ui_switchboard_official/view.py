@@ -1,7 +1,8 @@
-# Copyright 2017 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2017-2018 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
 from flask import jsonify, request
+from flask_babel import lazy_gettext as l_
 from flask_menu.classy import classy_menu_item
 
 from wazo_admin_ui.helpers.classful import BaseView, LoginRequiredView
@@ -11,11 +12,10 @@ from .form import SwitchboardForm
 
 
 class SwitchboardView(BaseView):
-
     form = SwitchboardForm
     resource = 'switchboard'
 
-    @classy_menu_item('.switchboards', 'Switchboards', order=3, icon="desktop")
+    @classy_menu_item('.switchboards', l_('Switchboards'), order=3, icon="desktop")
     def index(self):
         return super(SwitchboardView, self).index()
 
