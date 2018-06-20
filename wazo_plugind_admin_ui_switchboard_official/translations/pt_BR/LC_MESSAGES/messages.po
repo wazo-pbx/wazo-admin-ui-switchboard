@@ -4,12 +4,15 @@
 # wazo_admin_ui_switchboard project.
 # Wazo Dev Team <dev@wazo.community>, 2018.
 # 
+# Translators:
+# Roberto Xavier dos Santos <rxsantos@gmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: wazo_admin_ui_switchboard 0.1\n"
 "Report-Msgid-Bugs-To: 'dev@wazo.community'\n"
 "POT-Creation-Date: 2018-02-26 14:11-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Roberto Xavier dos Santos <rxsantos@gmail.com>, 2018\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/wazo/teams/69545/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -20,42 +23,42 @@ msgstr ""
 
 #: wazo_plugind_admin_ui_switchboard_official/form.py:27
 msgid "Members"
-msgstr ""
+msgstr "Membros"
 
 #: wazo_plugind_admin_ui_switchboard_official/form.py:32
 msgid "Name"
-msgstr ""
+msgstr "Nome"
 
 #: wazo_plugind_admin_ui_switchboard_official/form.py:34
 msgid "Submit"
-msgstr ""
+msgstr "Submeter"
 
 #: wazo_plugind_admin_ui_switchboard_official/form.py:40
 #: wazo_plugind_admin_ui_switchboard_official/plugin.py:30
 #: wazo_plugind_admin_ui_switchboard_official/templates/switchboard/edit.html:9
 #: wazo_plugind_admin_ui_switchboard_official/templates/switchboard/list.html:4
 msgid "Switchboard"
-msgstr ""
+msgstr "Distribuição"
 
 #: wazo_plugind_admin_ui_switchboard_official/templates/switchboard/edit.html:4
 #: wazo_plugind_admin_ui_switchboard_official/templates/switchboard/list.html:9
 #: wazo_plugind_admin_ui_switchboard_official/view.py:18
 msgid "Switchboards"
-msgstr ""
+msgstr "Distribuições"
 
 #: wazo_plugind_admin_ui_switchboard_official/templates/switchboard/edit.html:4
 #: wazo_plugind_admin_ui_switchboard_official/templates/switchboard/list.html:4
 msgid "List"
-msgstr ""
+msgstr "Lista"
 
 #: wazo_plugind_admin_ui_switchboard_official/templates/switchboard/edit.html:11
 msgid "Update"
-msgstr ""
+msgstr "Atualizar"
 
 #: wazo_plugind_admin_ui_switchboard_official/templates/switchboard/list.html:34
 msgid "Add Switchboard"
-msgstr ""
+msgstr "Adicionar Distribuição"
 
 #: wazo_plugind_admin_ui_switchboard_official/templates/switchboard/list.html:36
 msgid "Add"
-msgstr ""
+msgstr "Adicionar"
